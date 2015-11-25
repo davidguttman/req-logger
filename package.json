@@ -1,0 +1,22 @@
+{
+  "name": "req-logger",
+  "version": "1.0.0",
+  "description": "Simple http request logging",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js && standard",
+    "example": "node example.js"
+  },
+  "keywords": [],
+  "author": "David Guttman <david@guttman.io> (http://davidguttman.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "end-of-stream": "^1.1.0",
+    "xtend": "^4.0.1"
+  },
+  "devDependencies": {
+    "servertest": "^1.2.1",
+    "standard": "^5.4.1",
+    "tape": "^4.2.2"
+  }
+}
