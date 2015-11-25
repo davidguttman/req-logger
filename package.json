@@ -18,5 +18,13 @@
     "servertest": "^1.2.1",
     "standard": "^5.4.1",
     "tape": "^4.2.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidguttman/req-logger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/davidguttman/req-logger/issues"
+  },
+  "homepage": "https://github.com/davidguttman/req-logger#readme"
 }
