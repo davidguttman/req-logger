@@ -37,6 +37,18 @@ tape('should log local opts', function (t) {
   servertest(createServer(logger, {email: 'user@domain.com'}), url, opts)
 })
 
+tape('should log local function opts', function (t) {
+  var logger = ReqLogger(function (obj) {
+    t.equal(obj.company, 'some-company', 'should have company')
+    t.end()
+  })
+  var url = '/ok'
+  var opts = {method: 'GET'}
+  servertest(createServer(logger, {
+    company: function (req, res) { return req.company }
+  }), url, opts)
+})
+
 tape('should log with delay', function (t) {
   var logger = ReqLogger(function (obj) {
     t.ok(obj.responseTime > 250, 'should have correct responseTime')
@@ -51,6 +63,7 @@ function createServer (logger, localOpts) {
   return http.createServer(function (req, res) {
     logger(req, res, localOpts)
 
+    req.company = 'some-company'
     if (req.url === '/ok') {
       res.writeHead(200)
       return res.end('OK')

@@ -34,10 +34,27 @@ module.exports = function ReqLogger (optsGlobal, cbGlobal) {
       }
       if (err) info.error = err
 
-      cb(xtend(info, optsGlobal, optsLocal))
+      cb(
+        xtend(
+          info,
+          augmentOpts(optsGlobal, req, res),
+          augmentOpts(optsLocal, req, res)
+        )
+      )
     })
   }
 
   return logReq
 }
 
+function augmentOpts (opts, req, res) {
+  var augmented = {}
+  Object.keys(opts).forEach(function (key) {
+    if (typeof opts[key] !== 'function') {
+      augmented[key] = opts[key]
+    } else {
+      augmented[key] = opts[key](req, res)
+    }
+  })
+  return augmented
+}
