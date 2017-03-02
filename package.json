@@ -11,6 +11,7 @@
   "author": "David Guttman <david@guttman.io> (http://davidguttman.com/)",
   "license": "MIT",
   "dependencies": {
+    "client-ip": "^1.0.0",
     "end-of-stream": "^1.1.0",
     "xtend": "^4.0.1"
   },

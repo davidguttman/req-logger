@@ -1,5 +1,6 @@
 var eos = require('end-of-stream')
 var xtend = require('xtend')
+var clientIp = require('client-ip')
 
 module.exports = function ReqLogger (optsGlobal, cbGlobal) {
   if (process.env.NODE_ENV === 'test') return function () {}
@@ -25,7 +26,7 @@ module.exports = function ReqLogger (optsGlobal, cbGlobal) {
 
     eos(res, function (err) {
       var info = {
-        ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+        ip: getIp(req),
         method: req.method,
         url: req.url,
         userAgent: req.headers['user-agent'],
@@ -57,4 +58,15 @@ function augmentOpts (opts, req, res) {
     }
   })
   return augmented
+}
+
+function getIp (req) {
+  req.connection.socket = req.connection.socket || {}
+
+  var ips = (clientIp(req) || '')
+    .replace('::ffff:', '')
+    .replace(/\s/g, '')
+    .split(',')
+
+  return ips.length > 1 ? ips[ips.length - 2] : ips[0]
 }
